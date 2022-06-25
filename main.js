@@ -7,9 +7,8 @@ function computerPlay() {
     return rockPaperScissors[parseInt(Math.floor(Math.random()*3))]
 }
 
-function playRound() {
-    let playerSelection = prompt('Enter rock, paper or scissors').toLocaleLowerCase();
-    let computerSelection = computerPlay()
+function playRound(playerSelection) {
+    const computerSelection = computerPlay()
     if ((playerSelection === 'rock' && computerSelection === 'scissors') || 
         (playerSelection === 'paper' && computerSelection === 'rock') ||
         (playerSelection === 'scissors' && computerSelection ==='paper')) {
@@ -27,21 +26,26 @@ function playRound() {
     }
 }
 
-function game() {
-    for (let i = 0; i < 5; i++) {
-        console.log(playRound())
-    }
-}
+// function game() {
+//     for (let i = 0; i < 5; i++) {
+//         console.log(playRound())
+//     }
+// }
 
-function delcareWinner() {
-    if (playerScore > computerScore) {
-        return 'you win the game'
-    } else if (playerScore < computerScore) {
-        return 'you lose the game'
-    } else {
-        return 'the game is a tie'
-    }
-}
+// function delcareWinner() {
+//     if (playerScore > computerScore) {
+//         return 'you win the game'
+//     } else if (playerScore < computerScore) {
+//         return 'you lose the game'
+//     } else {
+//         return 'the game is a tie'
+//     }
+// }
 
-game();
-console.log(delcareWinner());
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', function (e) {
+        console.log(playRound(button.id));
+    });
+});
