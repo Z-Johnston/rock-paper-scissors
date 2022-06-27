@@ -2,7 +2,13 @@ const rockPaperScissors = ['rock', 'paper', 'scissors'];
 
 let playerScore = 0;
 let computerScore = 0;
+let playerScorePhrase = document.getElementById('player-score-phrase');
+let computerScorePhrase = document.getElementById('computer-score-phrase');
+let finalScoreMessage = document.querySelector('#final-score-message');
+let log = document.querySelector('#log');
+const buttons = document.querySelectorAll('button');
 
+//function for random computer move selection
 function computerPlay() {
     return rockPaperScissors[parseInt(Math.floor(Math.random()*3))]
 }
@@ -13,39 +19,42 @@ function playRound(playerSelection) {
         (playerSelection === 'paper' && computerSelection === 'rock') ||
         (playerSelection === 'scissors' && computerSelection ==='paper')) {
             playerScore++;
-            return 'you win'
-        }   
+            playerScorePhrase.textContent = `Player Score: ${playerScore}`;
+            checkForWinner(playerScore, computerScore);
+            return 'You win'
+    }   
     if ((playerSelection === 'rock' && computerSelection === 'paper') || 
         (playerSelection === 'paper' && computerSelection === 'scissors') ||
         (playerSelection === 'scissors' && computerSelection ==='rock')) {
             computerScore++;
-            return 'you lose'
-        }
+            computerScorePhrase.textContent = `Computer Score: ${computerScore}`;
+            checkForWinner(playerScore, computerScore);
+            return 'You lose'
+    }
     if (playerSelection === computerSelection) {
-        return 'it is a tie'
+        return 'It is a tie'
     }
 }
 
-// function game() {
-//     for (let i = 0; i < 5; i++) {
-//         console.log(playRound())
-//     }
-// }
+function checkForWinner(playerScore, computerScore) {
+    if (playerScore === 5) {
+        disableButtons();
+        finalScoreMessage.textContent = 'You Win the Round!';
+    } if (computerScore === 5) {
+        disableButtons();
+        finalScoreMessage.textContent = 'You Lose the Round!';
+    } 
+}
 
-// function delcareWinner() {
-//     if (playerScore > computerScore) {
-//         return 'you win the game'
-//     } else if (playerScore < computerScore) {
-//         return 'you lose the game'
-//     } else {
-//         return 'the game is a tie'
-//     }
-// }
+function disableButtons() {
+    buttons.forEach(elem => {
+        elem.disabled = true
+    })
+}
 
-
-const buttons = document.querySelectorAll('button');
+//UI functionality to buttons
 buttons.forEach((button) => {
-    button.addEventListener('click', function (e) {
-        console.log(playRound(button.id));
+    button.addEventListener('click', function() {
+        log.textContent = playRound(button.id);
     });
 });
